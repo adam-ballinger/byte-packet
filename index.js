@@ -295,5 +295,7 @@ module.exports = {
     checkPacket,
     generateRandomPacket,
     encodeBase58,
-    decodeBase58
+    decodeBase58,
+    getChecksumSize,
+    getFlag
 }

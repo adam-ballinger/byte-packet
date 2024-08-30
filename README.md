@@ -1,19 +1,19 @@
 # byte-packet
 
 ![npm](https://img.shields.io/npm/v/byte-packet)
-![license](https://img.shields.io/npm/l/byte-packet)
+![license](https://github.com/adam-ballinger/byte-packet/blob/main/LICENSE)
 ![downloads](https://img.shields.io/npm/dw/byte-packet)
 
 ## Overview
 
-`byte-packet` is a lightweight utility module designed for generating, manipulating, and validating byte packets with cryptographic security in Node.js or the browser. It integrates payload generation, checksum calculation, and flexible byte array handling. Emphasis on performance, minimalism, and ease of integration.
+`byte-packet` is a lightweight utility module designed for generating, manipulating, and validating packets of data with cryptographic security in Node.js or the browser. It integrates payload generation, checksum calculation, and flexible byte array handling. Emphasis on performance, minimalism, and ease of integration.
 
 ## Features
 
 - **Cryptographically Secure Random Payloads:** Generate secure random data for cryptographic purposes.
 - **Checksum Calculation and Validation:** Ensure data integrity with easy-to-use checksum utilities.
-- **Flexible Byte Packet Management:** Split, combine, and manage byte arrays with custom headers and flags.
-- **Base58 Encoding/Decoding:** Encode and decode byte packets using Base58, commonly used in blockchain applications.
+- **Flexible Byte Packet Management:** Split, combine, and manage byte arrays with custom headers, payload sizes, and checksum sizes.
+- **Base58 Encoding/Decoding:** Encode and decode data using Base58 and others.
 
 ## Installation
 
@@ -22,6 +22,16 @@ npm install byte-packet
 ```
 
 ## Usage
+
+```javascript
+const { generatePacket } = require('byte-packet'); // Import the generatePacket function
+
+const data = new Uint8Array([0, 1, 2, 3, 4]); // Example data as a Uint8Array
+
+const packet = generatePacket(data); // Generate a packet using the data
+
+console.log('Generated Packet:', packet); // Display the generated packet
+```
 
 #### Generating a Random Payload
 

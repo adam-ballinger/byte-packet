@@ -32,5 +32,13 @@
   "bugs": {
     "url": "https://github.com/adam-ballinger/byte-packet/issues"
   },
-  "homepage": "https://github.com/adam-ballinger/byte-packet#readme"
+  "homepage": "https://github.com/adam-ballinger/byte-packet#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "bs58": "^6.0.0",
+    "js-sha256": "^0.11.0",
+    "randombytes": "^2.1.0"
+  }
 }
