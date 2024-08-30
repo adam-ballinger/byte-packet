@@ -75,6 +75,9 @@ const decoded = decodeBase58(encoded);
 console.log(`Decoded packet is valid: ${checkPacket(decoded)}`);
 ```
 
+## Issues and Feedback
+If you have suggestions on how to make this module more useful or if you encounter any issues, please let me know by opening a new issue here [Issues](https://github.com/adam-ballinger/byte-packet/issues). I’m eager for feedback and to collaborate on making byte-packet more useful.
+
 ## API
 
 ###### generatePacket(payload, [checksumSize=1], [flag=0])
@@ -137,6 +140,37 @@ Decodes a Base58-encoded string back into a byte packet.
 - **Cryptographic Applications:** Generate secure tokens, validate message validity, and more.
 - **Blockchain/Cryptocurrency:** Create and manage secure data packets, with built-in Base58 support.
 - **Networking Protocols:** Easily manage binary data structures for low-level protocol development.
+
+## Contributing
+I’d love to welcome contributions to the byte-packet module. Whether it’s bug fixes, new features, or improvements to the existing codebase, feedback and input is highly valued.
+
+#### How to Contribute
+**Fork the Repository:** Start by forking the repo to your own GitHub account.
+Clone the Repo: Clone your fork locally to work on it.
+```bash
+git clone https://github.com/your-username/byte-packet.git
+cd byte-packet
+```
+
+**Create a Branch:** Create a new branch to work on your changes.
+```bash
+git checkout -b my-new-feature
+```
+
+**Make Changes:** Implement your changes or additions.
+**Run Tests:** If you add new features or fix bugs, please run the tests to ensure the code remains stable. Write new tests for new features.
+```bash
+npm install --save-dev jest
+npm jest
+```
+
+**Commit and Push:** Commit your changes and push them to your forked repository.
+```bash
+git add .
+git commit -m "Description of your changes"
+git push origin my-new-feature
+```
+**Create a Pull Request:** Once your changes are ready, create a pull request to the main repository. You can do this by visiting this link [Pull Requests](https://github.com/adam-ballinger/byte-packet/pulls).
 
 ## License
 
