@@ -1,0 +1,36 @@
+{
+  "name": "byte-packet",
+  "version": "1.0.0",
+  "description": "`byte-packet` is a lightweight utility module designed for generating, manipulating, and validating byte packets with cryptographic security in Node.js or the browser. It integrates payload generation, checksum calculation, and flexible byte array handling. Emphasis on performance, minimalism, and ease of integration.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adam-ballinger/byte-packet.git"
+  },
+  "keywords": [
+    "byte-packet",
+    "cryptography",
+    "checksum",
+    "random-bytes",
+    "secure",
+    "Uint8Array",
+    "Base58",
+    "data-integrity",
+    "validation",
+    "packet-generation",
+    "data-handling",
+    "Node.js",
+    "browser",
+    "encoding",
+    "binary-data"
+  ],
+  "author": "Adam Ballinger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adam-ballinger/byte-packet/issues"
+  },
+  "homepage": "https://github.com/adam-ballinger/byte-packet#readme"
+}
