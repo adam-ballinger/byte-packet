@@ -8,7 +8,7 @@
  * 
  * @module byte-packet
  * @author Adam Ballinger
- * @version 1.0.0
+ * @version 1.0.1
  * @license MIT
  * @date 2024-08-29
  */

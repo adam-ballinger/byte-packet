@@ -6,14 +6,14 @@
 
 ## Overview
 
-`byte-packet` is a lightweight utility module designed for generating, manipulating, and validating packets of data with cryptographic security in Node.js or the browser. It integrates payload generation, checksum calculation, and flexible byte array handling. Emphasis on performance, minimalism, and ease of integration.
+`byte-packet` is a lightweight utility module designed for generating, manipulating, and validating packets of data with cryptographic security in Node.js or the browser. It integrates random payload generation, checksum calculation, checksum validation, and more. Emphasis on performance, minimalism, and ease of integration.
 
 ## Features
 
-- **Cryptographically Secure Random Payloads:** Generate secure random data for cryptographic purposes.
-- **Checksum Calculation and Validation:** Ensure data integrity with easy-to-use checksum utilities.
-- **Flexible Byte Packet Management:** Split, combine, and manage byte arrays with custom headers, payload sizes, and checksum sizes.
-- **Base58 Encoding/Decoding:** Encode and decode data using Base58 and others.
+- **Cryptographically Secure Random Payloads:** Generate secure random data with randomness that meets cryptographic standards.
+- **Checksum Calculation and Validation:** Create data packets with easy-to-use checksum utilities.
+- **Flexible Byte Packet Management:** Split, combine, and manage byte arrays packets with custom metadata flags, payload sizes, and checksum sizes.
+- **Encoding/Decoding:** Encode and decode data using Base58 and others.
 
 ## Installation
 
@@ -31,6 +31,15 @@ const data = new Uint8Array([0, 1, 2, 3, 4]); // Example data as a Uint8Array
 const packet = generatePacket(data); // Generate a packet using the data
 
 console.log('Generated Packet:', packet); // Display the generated packet
+
+/**
+ * Output:
+ * Generated Packet: Uint8Array(7) [ 32, 0, 1, 2, 3, 4, 8 ]
+ * 
+ * [32] (Header)
+ * [0, 1, 2, 3, 4] (Payload)
+ * [8] (Checksum)
+ * 
 ```
 
 #### Generating a Random Payload
@@ -57,7 +66,7 @@ console.log(checksum);
 ```javascript
 const { checkPacket, generateRandomPacket } = require('byte-packet');
 
-const packet = generateRandomPacket(16, 3, 1); // Generates a random packet with a 16-byte payload, 3-byte checksum, and a flag
+const packet = generateRandomPacket(16, 3, 1); // Generates a random packet with a 16-byte payload, 3-byte checksum, and a flag = 1
 const isValid = checkPacket(packet);
 console.log(`Packet is valid: ${isValid}`);
 ```
@@ -74,9 +83,6 @@ console.log(`Encoded: ${encoded}`);
 const decoded = decodeBase58(encoded);
 console.log(`Decoded packet is valid: ${checkPacket(decoded)}`);
 ```
-
-## Issues and Feedback
-If you have suggestions on how to make this module more useful or if you encounter any issues, please let me know by opening a new issue here [Issues](https://github.com/adam-ballinger/byte-packet/issues). I’m eager for feedback and to collaborate on making byte-packet more useful.
 
 ## API
 
@@ -135,11 +141,8 @@ Decodes a Base58-encoded string back into a byte packet.
 - **Returns:** `Uint8Array`
 - **Throws:** Error if the decoded packet is not valid.
 
-## Use Cases
-
-- **Cryptographic Applications:** Generate secure tokens, validate message validity, and more.
-- **Blockchain/Cryptocurrency:** Create and manage secure data packets, with built-in Base58 support.
-- **Networking Protocols:** Easily manage binary data structures for low-level protocol development.
+## Issues and Feedback
+If you have suggestions on how to make this module more useful or if you encounter any issues, please let me know by opening a new issue here [Issues](https://github.com/adam-ballinger/byte-packet/issues). I’m eager for feedback and to collaborate on making byte-packet more useful.
 
 ## Contributing
 I’d love to welcome contributions to the byte-packet module. Whether it’s bug fixes, new features, or improvements to the existing codebase, feedback and input is highly valued.
@@ -180,9 +183,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 Adam Ballinger - [GitHub](https://github.com/adam-ballinger)
 
-## Version
+I'm excited about Node.js and npm. My focus is on writing code that works seamlessly in both Node.js and the browser, with a strong emphasis on creating small, lightweight packages. My goal is to ensure that everything I write is easy to understand, even for beginners, quick to implement, and adheres to best practices and conventions.
 
-1.0.0
+I believe in the importance of writing code with people in mind—code should be as human-friendly as possible. I am an amateur with much to learn, I am dedicated to improving my skills and would appreciate any feedback or guidance from the community.
 
 ## To-Do
 
@@ -220,8 +223,8 @@ Adam Ballinger - [GitHub](https://github.com/adam-ballinger)
 
 ###### 9. **Error Correction**
    - **Current Limitation:** Packets can be checked for validity but the data can not be recovered if there is any loss
-   - **Suggested Improvement:** Introduce error correction methods such as Reed-Soloman.
+   - **Suggested Improvement:** Introduce optional error correction methods such as Reed-Soloman.
 
-###### 10. **Byte-Packet Objects**
+###### 10. **Object Oriented byte-packets**
    - **Current Limitation:** Currently there is no class for byte-packets.
    - **Suggested Improvement:** Create a class to represent byte-packet objects.
