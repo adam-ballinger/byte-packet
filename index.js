@@ -142,13 +142,12 @@ function splitPacket(packet) {
 
     let header = packet.slice(0, 1);
     let checksumSize = getChecksumSize(header);
-    let flag = getFlag(header);
     let payloadSize = packet.length - 1 - checksumSize;
 
     let payload = packet.slice(1, 1+payloadSize);
     let checksum = packet.slice(1+payloadSize, 1+payloadSize+checksumSize);
 
-    return {header, payload, checksum, checksumSize, flag};
+    return {header, payload, checksum};
 }
 
 /**

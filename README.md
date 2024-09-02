@@ -36,10 +36,12 @@ console.log('Generated Packet:', packet); // Display the generated packet
  * Output:
  * Generated Packet: Uint8Array(7) [ 32, 0, 1, 2, 3, 4, 8 ]
  * 
- * [32] (Header)
- * [0, 1, 2, 3, 4] (Payload)
- * [8] (Checksum)
+ * Explanation of Output:
+ * [32] is the header; 32 = 0b00100000 where 0b001_____ is the checksumSize (defaults to 1) and 0b___00000 is the flag (defaults to 0).
+ * [0, 1, 2, 3, 4] is the payload, i.e., the data.
+ * [8] is the checksum = first n bytes of sha256(payload) where n is the checksumSize.
  * 
+ */
 ```
 
 #### Generating a Random Payload
@@ -86,7 +88,7 @@ console.log(`Decoded packet is valid: ${checkPacket(decoded)}`);
 
 ## API
 
-###### generatePacket(payload, [checksumSize=1], [flag=0])
+###### `generatePacket(payload, [checksumSize=1], [flag=0])`
 The generatePacket function creates a byte packet from the specified payload, checksum size, and flag. This packet can be used for various purposes, such as encoding data for transmission, storage, or further processing.
 
 - **Parameters:**
@@ -125,6 +127,29 @@ Generates a random byte packet with a specified payload size, checksum size, and
   - `checksumSize` (number): The size of the checksum to generate.
   - `flag` (number): A flag value to include in the packet header.
 - **Returns:** `Uint8Array`
+
+###### `splitPacket(packet)`
+The splitPacket function splits a byte packet into its constituent components: header, payload, and checksum. It returns an object containing these components.
+
+- **Parameters:**
+  - `packet` (Uint8Array): The byte packet to be split.
+- **Returns:**
+  - `Object`: An object containing the following properties:
+    - `header` (Uint8Array): A Uint8Array representing the header of the packet.
+    - `payload` (Uint8Array): A Uint8Array containing the payload data of the packet.
+    - `checksum` (Uint8Array): A Uint8Array containing the checksum extracted from the packet.
+
+###### `info(packet)`
+Extracts metadata and validates a given byte packet. It returns an object containing the size of the checksum, the flag from the header, the size of the payload, and whether the packet is valid.
+
+- **Parameters:**
+  - `packet` (Uint8Array): The byte packet to extract information from.
+- **Returns:**
+  - `Object`: An object containing the following properties:
+    - `checksumSize` (number): The size of the checksum in bytes as extracted from the packet header.
+    - `flag` (number): The flag value from the packet header, representing additional metadata or control information.
+    - `payloadSize` (number): The size of the payload in bytes.
+    - `isValid` (boolean): A boolean value indicating whether the packet's checksum is valid for its payload.
 
 ###### `encodeBase58(packet)`
 Encodes a byte packet to a Base58-encoded string.
