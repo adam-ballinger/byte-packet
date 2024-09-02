@@ -1,6 +1,6 @@
 {
   "name": "byte-packet",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "`byte-packet` is a lightweight utility module designed for generating, manipulating, and validating byte packets with cryptographic security in Node.js or the browser. It integrates payload generation, checksum calculation, and flexible byte array handling. Emphasis on performance, minimalism, and ease of integration.",
   "main": "index.js",
   "scripts": {
