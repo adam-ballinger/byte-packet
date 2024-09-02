@@ -88,7 +88,7 @@ console.log(`Decoded packet is valid: ${checkPacket(decoded)}`);
 
 ## API
 
-###### `generatePacket(payload, [checksumSize=1], [flag=0])`
+#### `generatePacket(payload, [checksumSize=1], [flag=0])`
 The generatePacket function creates a byte packet from the specified payload, checksum size, and flag. This packet can be used for various purposes, such as encoding data for transmission, storage, or further processing.
 
 - **Parameters:**
@@ -97,14 +97,14 @@ The generatePacket function creates a byte packet from the specified payload, ch
    - `flag` (number) (optional, default: 0): A flag used in the header for additional packet information. This can be used to encode metadata or control information about the packet.
 - **Returns:** `Uint8Array`
 
-###### `generateRandomPayload(size)`
+#### `generateRandomPayload(size)`
 Generates a random `Uint8Array` payload of the specified size.
 
 - **Parameters:**
   - `size` (number): The size of the `Uint8Array` to generate.
 - **Returns:** `Uint8Array`
 
-###### `calculateChecksum(payload, size)`
+#### `calculateChecksum(payload, size)`
 Calculates a checksum for the given payload.
 
 - **Parameters:**
@@ -112,14 +112,14 @@ Calculates a checksum for the given payload.
   - `size` (number): The size of the checksum to generate.
 - **Returns:** `Uint8Array`
 
-###### `checkPacket(packet)`
+#### `checkPacket(packet)`
 Checks the validity of a byte packet by validating its payload and checksum.
 
 - **Parameters:**
   - `packet` (Uint8Array): The byte packet to check.
 - **Returns:** `boolean`
 
-###### `generateRandomPacket(payloadSize, checksumSize, flag)`
+#### `generateRandomPacket(payloadSize, checksumSize, flag)`
 Generates a random byte packet with a specified payload size, checksum size, and header flag.
 
 - **Parameters:**
@@ -128,7 +128,7 @@ Generates a random byte packet with a specified payload size, checksum size, and
   - `flag` (number): A flag value to include in the packet header.
 - **Returns:** `Uint8Array`
 
-###### `splitPacket(packet)`
+#### `splitPacket(packet)`
 The splitPacket function splits a byte packet into its constituent components: header, payload, and checksum. It returns an object containing these components.
 
 - **Parameters:**
@@ -139,7 +139,7 @@ The splitPacket function splits a byte packet into its constituent components: h
     - `payload` (Uint8Array): A Uint8Array containing the payload data of the packet.
     - `checksum` (Uint8Array): A Uint8Array containing the checksum extracted from the packet.
 
-###### `info(packet)`
+#### `info(packet)`
 Extracts metadata and validates a given byte packet. It returns an object containing the size of the checksum, the flag from the header, the size of the payload, and whether the packet is valid.
 
 - **Parameters:**
@@ -151,14 +151,14 @@ Extracts metadata and validates a given byte packet. It returns an object contai
     - `payloadSize` (number): The size of the payload in bytes.
     - `isValid` (boolean): A boolean value indicating whether the packet's checksum is valid for its payload.
 
-###### `encodeBase58(packet)`
+#### `encodeBase58(packet)`
 Encodes a byte packet to a Base58-encoded string.
 
 - **Parameters:**
   - `packet` (Uint8Array): The byte packet to encode.
 - **Returns:** `string`
 
-###### `decodeBase58(base58)`
+#### `decodeBase58(base58)`
 Decodes a Base58-encoded string back into a byte packet.
 
 - **Parameters:**
@@ -214,42 +214,42 @@ I believe in the importance of writing code with people in mind—code should be
 
 ## To-Do
 
-###### 1. **Configurable Checksum Algorithms**
+#### 1. **Configurable Checksum Algorithms**
    - **Current Limitation:** The module currently uses single SHA-256 for checksum calculation.
    - **Suggested Improvement:** Allow users to choose from different cryptographic hash functions (e.g., SHA-1, SHA-512, HMAC) or even provide their custom checksum algorithms. This flexibility could cater to a broader range of security requirements.
 
-###### 2. **Support for Variable-Length Headers**
+#### 2. **Support for Variable-Length Headers**
    - **Current Limitation:** The module uses a fixed-size 1-byte header, which may limit the amount of metadata that can be stored.
    - **Suggested Improvement:** Implement variable-length headers that can store more information, such as versioning, timestamps, or additional flags.
 
-###### 3. **Encryption/Decryption of Payloads**
+#### 3. **Encryption/Decryption of Payloads**
    - **Current Limitation:** The module focuses on packet generation and validation but does not provide encryption capabilities.
    - **Suggested Improvement:** Add functionality to encrypt and decrypt the payloads using symmetric or asymmetric encryption, which would further secure the data packets during transmission.
 
-###### 4. **Serialization/Deserialization Support**
+#### 4. **Serialization/Deserialization Support**
    - **Current Limitation:** The module does not provide methods to serialize or deserialize packet objects for storage or transmission in different formats (e.g., JSON, binary).
    - **Suggested Improvement:** Add methods to convert packets to and from serialized formats, making it easier to store and transmit them over various protocols.
 
-###### 5. **Packet Integrity and Authenticity Verification**
+#### 5. **Packet Integrity and Authenticity Verification**
    - **Current Limitation:** The module verifies the integrity of the packet via checksum but does not handle authenticity.
    - **Suggested Improvement:** Introduce digital signature functionality to verify the authenticity of the packets, ensuring that they have not been tampered with and are from a trusted source.
 
-###### 6. **Extensive Unit Testing and Benchmarking**
+#### 6. **Extensive Unit Testing and Benchmarking**
    - **Current Limitation:** The module is not extensively tested.
    - **Suggested Improvement:** Develop a comprehensive suite of unit tests covering edge cases, as well as performance benchmarks to give users confidence in the module’s reliability and efficiency.
 
-###### 7. **Support for Different Encoding Schemes**
+#### 7. **Support for Different Encoding Schemes**
    - **Current Limitation:** The module currently supports Base58 encoding/decoding.
    - **Suggested Improvement:** Add support for other encoding schemes like Base32, Base64, or Bech32 to make the module more versatile in different application scenarios.
 
-###### 8. **Cross-Platform Compatibility**
+#### 8. **Cross-Platform Compatibility**
    - **Current Limitation:** While intended to be compatible with Node.js or the browser, the module has not been tested in the browser.
    - **Suggested Improvement:** Ensure that the module is fully compatible with both Node.js and browser environments.
 
-###### 9. **Error Correction**
+#### 9. **Error Correction**
    - **Current Limitation:** Packets can be checked for validity but the data can not be recovered if there is any loss
    - **Suggested Improvement:** Introduce optional error correction methods such as Reed-Soloman.
 
-###### 10. **Object Oriented byte-packets**
+#### 10. **Object Oriented byte-packets**
    - **Current Limitation:** Currently there is no class for byte-packets.
    - **Suggested Improvement:** Create a class to represent byte-packet objects.
