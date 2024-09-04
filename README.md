@@ -9,9 +9,10 @@ A `BytePacket` is a data structure designed to encapsulate and manage binary dat
 ## Features
 
 - **Cryptographically Secure Random Payloads:** Generate secure random data with randomness that meets cryptographic standards.
-- **Checksum Calculation and Validation:** Create data packets with easy-to-use checksum utilities.
+- **Checksum Calculation and Validation:** Each BytePacket includes a checksum to ensure data integrity. Corruption to the data will result in an invalid payload/checksum pair.
 - **Flexible Byte Packet Management:** Split, combine, and manage byte arrays packets with custom metadata flags, payload sizes, and checksum sizes.
-- **Encoding/Decoding:** Encode and decode data using Base58.
+- **Encoding/Decoding:** Encode and decode data using Base58 for compact representation.
+- **Header Flags:** The `flag` field in the header can be used to store meta data about the packet.
 
 ## Installation
 
@@ -22,147 +23,104 @@ npm install byte-packet
 ## Usage
 
 ```javascript
-const { generatePacket } = require('byte-packet'); // Import the generatePacket function
+const BytePacket = require('byte-packet');
 
-const data = new Uint8Array([0, 1, 2, 3, 4]); // Example data as a Uint8Array
+// Example payload
+const payload = new Uint8Array([1, 2, 3, 4]);
 
-const packet = generatePacket(data); // Generate a packet using the data
+// Generate a packet with a 2-byte checksum and a flag value of 3
+const packet = BytePacket.generatePacket(payload);
 
-console.log('Generated Packet:', packet); // Display the generated packet
-
+console.log(packet); 
 /**
  * Output:
- * Generated Packet: Uint8Array(7) [ 32, 0, 1, 2, 3, 4, 8 ]
+ * BytePacket: {packet: Uint8Array(7) [ 32, 0, 1, 2, 3, 4, 8 ] }
  * 
  * Explanation of Output:
  * [32] is the header; 32 = 0b00100000 where 0b001_____ is the checksumSize (defaults to 1) and 0b___00000 is the flag (defaults to 0).
  * [0, 1, 2, 3, 4] is the payload, i.e., the data.
- * [8] is the checksum = first n bytes of sha256(payload) where n is the checksumSize.
- * 
+ * [8] is the checksum = first n bytes of sha256(payload) where n is the   * checksumSize.
  */
 ```
 
 #### Generating a Random Payload
 
 ```javascript
-const { generateRandomPayload } = require('byte-packet');
+const BytePacket = require('byte-packet');
 
-const payload = generateRandomPayload(16); // Generates a 16-byte random payload
-console.log(payload);
-```
+// Generate a random packet with a 10-byte payload, 2-byte checksum, and flag value of 1
+const randomPacket = BytePacket.generateRandomPacket(10, 2, 1);
 
-#### Calculating a Checksum
+console.log(randomPacket);
 
-```javascript
-const { calculateChecksum } = require('byte-packet');
-
-const payload = new Uint8Array([1, 2, 3, 4, 5]);
-const checksum = calculateChecksum(payload, 3); // Generates a 3-byte checksum
-console.log(checksum);
 ```
 
 #### Validating a Packet
 
 ```javascript
-const { checkPacket, generateRandomPacket } = require('byte-packet');
+const BytePacket = require('byte-packet');
 
-const packet = generateRandomPacket(16, 3, 1); // Generates a random packet with a 16-byte payload, 3-byte checksum, and a flag = 1
-const isValid = checkPacket(packet);
-console.log(`Packet is valid: ${isValid}`);
+// Example payload
+const payload = new Uint8Array([0x01, 0x02, 0x03]);
+
+// Generate a packet
+const packet = BytePacket.generatePacket(payload);
+
+// Check if the packet is valid
+console.log(packet.isValid); // true
 ```
 
-#### Encoding and Decoding with Base58
+#### Getting the flag value of a packet
+```javascript
+const BytePacket = require('byte-packet');
+
+// Example payload
+const payload = new Uint8Array([0x01, 0x02, 0x03]);
+
+// Generate a packet with a flag value of 5
+const packet = BytePacket.generatePacket(payload, 1, 5);
+
+console.log(packet.flag); // 5
+```
+
+
+#### Encoding  wth Base58
 
 ```javascript
-const { encodeBase58, decodeBase58, generateRandomPacket } = require('byte-packet');
+const BytePacket = require('byte-packet');
 
-const packet = generateRandomPacket(16, 3, 1);
-const encoded = encodeBase58(packet);
-console.log(`Encoded: ${encoded}`);
+// Example payload
+const payload = new Uint8Array([0x01, 0x02, 0x03]);
 
-const decoded = decodeBase58(encoded);
-console.log(`Decoded packet is valid: ${checkPacket(decoded)}`);
+// Generate a packet
+const packet = BytePacket.generatePacket(payload);
+
+// Get the Base58 encoded string
+const encoded = packet.encodeBase58();
+
+console.log(encoded); // Base58 string representation of the packet
+```
+
+#### Decoding with Base58
+
+```javascript
+const BytePacket = require('byte-packet');
+
+// Example Base58 string
+const encoded = '3vQB7B6MrGQZaxCuFg4oh';
+
+// Decode the Base58 string back into a BytePacket
+try {
+    const decodedPacket = BytePacket.decodeBase58(encoded);
+    console.log(decodedPacket.packet); // Uint8Array of the decoded packet
+} catch (error) {
+    console.error(error.message);
+}
 ```
 
 ## API
 
-#### `generatePacket(payload, [checksumSize=1], [flag=0])`
-The generatePacket function creates a byte packet from the specified payload, checksum size, and flag. This packet can be used for various purposes, such as encoding data for transmission, storage, or further processing.
-
-- **Parameters:**
-   - `payload` (Uint8Array):The data to be included in the packet. This is the core content around which the packet is generated.
-   - `checksumSize` (number) (optional, default: 1): The size of the checksum in bytes. This determines how many bytes will be used for the checksum, which is appended to the packet.
-   - `flag` (number) (optional, default: 0): A flag used in the header for additional packet information. This can be used to encode metadata or control information about the packet.
-- **Returns:** `Uint8Array`
-
-#### `generateRandomPayload(size)`
-Generates a random `Uint8Array` payload of the specified size.
-
-- **Parameters:**
-  - `size` (number): The size of the `Uint8Array` to generate.
-- **Returns:** `Uint8Array`
-
-#### `calculateChecksum(payload, size)`
-Calculates a checksum for the given payload.
-
-- **Parameters:**
-  - `payload` (Uint8Array): The input payload.
-  - `size` (number): The size of the checksum to generate.
-- **Returns:** `Uint8Array`
-
-#### `checkPacket(packet)`
-Checks the validity of a byte packet by validating its payload and checksum.
-
-- **Parameters:**
-  - `packet` (Uint8Array): The byte packet to check.
-- **Returns:** `boolean`
-
-#### `generateRandomPacket(payloadSize, checksumSize, flag)`
-Generates a random byte packet with a specified payload size, checksum size, and header flag.
-
-- **Parameters:**
-  - `payloadSize` (number): The size of the payload to generate.
-  - `checksumSize` (number): The size of the checksum to generate.
-  - `flag` (number): A flag value to include in the packet header.
-- **Returns:** `Uint8Array`
-
-#### `splitPacket(packet)`
-The splitPacket function splits a byte packet into its constituent components: header, payload, and checksum. It returns an object containing these components.
-
-- **Parameters:**
-  - `packet` (Uint8Array): The byte packet to be split.
-- **Returns:**
-  - `Object`: An object containing the following properties:
-    - `header` (Uint8Array): A Uint8Array representing the header of the packet.
-    - `payload` (Uint8Array): A Uint8Array containing the payload data of the packet.
-    - `checksum` (Uint8Array): A Uint8Array containing the checksum extracted from the packet.
-
-#### `info(packet)`
-Extracts metadata and validates a given byte packet. It returns an object containing the size of the checksum, the flag from the header, the size of the payload, and whether the packet is valid.
-
-- **Parameters:**
-  - `packet` (Uint8Array): The byte packet to extract information from.
-- **Returns:**
-  - `Object`: An object containing the following properties:
-    - `checksumSize` (number): The size of the checksum in bytes as extracted from the packet header.
-    - `flag` (number): The flag value from the packet header, representing additional metadata or control information.
-    - `payloadSize` (number): The size of the payload in bytes.
-    - `isValid` (boolean): A boolean value indicating whether the packet's checksum is valid for its payload.
-
-#### `encodeBase58(packet)`
-Encodes a byte packet to a Base58-encoded string.
-
-- **Parameters:**
-  - `packet` (Uint8Array): The byte packet to encode.
-- **Returns:** `string`
-
-#### `decodeBase58(base58)`
-Decodes a Base58-encoded string back into a byte packet.
-
-- **Parameters:**
-  - `base58` (string): The Base58-encoded string to decode.
-- **Returns:** `Uint8Array`
-- **Throws:** Error if the decoded packet is not valid.
+API documentation coming soon.
 
 ## Issues and Feedback
 If you have suggestions on how to make this module more useful or if you encounter any issues, please let me know by opening a new issue here [Issues](https://github.com/adam-ballinger/byte-packet/issues). I’m eager for feedback and to collaborate on making byte-packet more useful.
@@ -248,6 +206,5 @@ I believe in the importance of writing code with people in mind—code should be
    - **Current Limitation:** Packets can be checked for validity but the data can not be recovered if there is any loss
    - **Suggested Improvement:** Introduce optional error correction methods such as Reed-Soloman.
 
-#### 10. **Object Oriented byte-packets**
-   - **Current Limitation:** Currently there is no class for byte-packets.
-   - **Suggested Improvement:** Create a class to represent byte-packet objects.
+#### **10. QR Code Generation**
+   - **Suggested Improvement:** Add methods to generate QR codes
