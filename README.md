@@ -6,6 +6,8 @@
 
 A `BytePacket` is a data structure designed to encapsulate and manage binary data (bytes) in a compact and secure format. It is used in situations where you need to handle and transmit small pieces of data, ensuring that the integrity of the data is maintained through checksum validation. byte-packet is a lightweight utility module designed for generating, manipulating, and validating BytePacket objects in Node.js or the browser. Emphasis on performance, minimalism, and ease of integration.
 
+The name byte-packet comes from this library's use of byte arrays (`Uint8Array`)as the central store of data. Uint8Array's are memory efficient, highly compatible, and interoperable. 
+
 ## Features
 
 - **Cryptographically Secure Random Payloads:** Generate secure random data with randomness that meets cryptographic standards.
@@ -22,13 +24,15 @@ npm install byte-packet
 
 ## Usage
 
+#### Generating a BytePacket
+
 ```javascript
 const BytePacket = require('byte-packet');
 
 // Example payload
 const payload = new Uint8Array([1, 2, 3, 4]);
 
-// Generate a packet with a 2-byte checksum and a flag value of 3
+// Generate a packet
 const packet = BytePacket.generatePacket(payload);
 
 console.log(packet); 
@@ -37,7 +41,7 @@ console.log(packet);
  * BytePacket: {packet: Uint8Array(7) [ 32, 0, 1, 2, 3, 4, 8 ] }
  * 
  * Explanation of Output:
- * [32] is the header; 32 = 0b00100000 where 0b001_____ is the checksumSize (defaults to 1) and 0b___00000 is the flag (defaults to 0).
+ * [32] is the header; 32 = 0b00100000 where 0b001_____ is the 3 bit checksumSize (defaults = 1) and 0b___00000 is the 5-bit flag (default = 0).
  * [0, 1, 2, 3, 4] is the payload, i.e., the data.
  * [8] is the checksum = first n bytes of sha256(payload) where n is the   * checksumSize.
  */
@@ -118,9 +122,157 @@ try {
 }
 ```
 
-## API
+# BytePacket API Guide
 
-API documentation coming soon.
+The `BytePacket` class is a lightweight utility module designed for handling and transmitting small pieces of binary data in a secure and efficient manner. The class encapsulates data into a compact format, ensuring the integrity of the data through checksum validation. This guide will provide an overview of the properties and methods available in the `BytePacket` class.
+
+## API: `class BytePacket`
+
+#### Constructor
+
+##### `new BytePacket(packet)`
+
+- **Description**: Creates a `BytePacket` instance from the specified `Uint8Array` packet data.
+- **Parameters**:
+  - `packet` (Uint8Array): The binary data to be encapsulated in the `BytePacket`.
+- **Returns**: A new `BytePacket` instance.
+
+#### Properties
+
+##### `packet`
+
+- **Description**: The entire `Uint8Array` representing the BytePacket, including the header, payload, and checksum.
+- **Type**: `Uint8Array`
+- **Access**: Read-only
+
+##### `header`
+
+- **Description**: Retrieves the header component of the BytePacket.
+- **Returns**: `Uint8Array` - A `Uint8Array` containing the header.
+
+##### `checksumSize`
+
+- **Description**: Retrieves the size of the checksum based on the information in the header.
+- **Returns**: `number` - The size of the checksum in bytes.
+
+##### `length`
+
+- **Description**: Retrieves the total length of the BytePacket, including the header, payload, and checksum.
+- **Returns**: `number` - The length of the BytePacket in bytes.
+
+##### `payloadSize`
+
+- **Description**: Retrieves the size of the payload portion of the BytePacket.
+- **Returns**: `number` - The size of the payload in bytes.
+
+##### `payload`
+
+- **Description**: Retrieves the payload component of the BytePacket.
+- **Returns**: `Uint8Array` - A `Uint8Array` containing the payload.
+
+##### `checksum`
+
+- **Description**: Retrieves the checksum component of the BytePacket.
+- **Returns**: `Uint8Array` - A `Uint8Array` containing the checksum.
+
+##### `flag`
+
+- **Description**: Retrieves the flag value stored in the header.
+- **Returns**: `number` - The 5-bit flag value.
+
+##### `isValid`
+
+- **Description**: Checks whether the BytePacket is valid by verifying the payload against its checksum.
+- **Returns**: `boolean` - `True` if the packet is valid; otherwise, `False`.
+
+##### `encodeBase58`
+
+- **Description**: Encodes the BytePacket into a Base58 string.
+- **Returns**: `string` - The Base58-encoded string representing the BytePacket.
+
+#### Methods
+
+##### `slice(start=0, end=this.packet.length)`
+
+- **Description**: Extracts a slice of the BytePacket.
+- **Parameters**:
+  - `start` (number): The zero-based index at which to begin extraction. Default is `0`.
+  - `end` (number): The zero-based index before which to end extraction. Default is the length of the packet.
+- **Returns**: `Uint8Array` - A `Uint8Array` slice of the BytePacket.
+
+#### Static Methods
+
+##### `static calculateChecksum(payload, size)`
+
+- **Description**: Calculates a checksum for the given payload.
+- **Parameters**:
+  - `payload` (Uint8Array): The data for which the checksum is to be calculated.
+  - `size` (number): The size of the checksum to generate.
+- **Returns**: `Uint8Array` - A `Uint8Array` containing the calculated checksum.
+
+##### `static generateHeader(checksumSize, flag)`
+
+- **Description**: Generates a 1-byte header based on the checksum size and flag.
+- **Parameters**:
+  - `checksumSize` (number): A 3-bit value (0-7) representing the checksum size.
+  - `flag` (number): A 5-bit value (0-31) representing additional flags.
+- **Returns**: `Uint8Array` - A `Uint8Array` containing the 1-byte header.
+
+##### `static generateRandomPayload(size)`
+
+- **Description**: Generates a random `Uint8Array` payload of the specified size.
+- **Parameters**:
+  - `size` (number): The size of the payload to generate.
+- **Returns**: `Uint8Array` - A `Uint8Array` filled with random values.
+
+##### `static Uint8ArraysEqual(arr1, arr2)`
+
+- **Description**: Compares two `Uint8Array` objects for equality in both length and content.
+- **Parameters**:
+  - `arr1` (Uint8Array): The first `Uint8Array` to compare.
+  - `arr2` (Uint8Array): The second `Uint8Array` to compare.
+- **Returns**: `boolean` - `True` if the arrays are equal; otherwise, `False`.
+
+##### `static checkPair(payload, checksum)`
+
+- **Description**: Validates a payload against its checksum.
+- **Parameters**:
+  - `payload` (Uint8Array): The data to be validated.
+  - `checksum` (Uint8Array): The checksum to validate against.
+- **Returns**: `boolean` - `True` if the checksum is valid; otherwise, `False`.
+
+##### `static combineUint8Arrays(arrays)`
+
+- **Description**: Combines multiple `Uint8Array` objects into a single `Uint8Array`.
+- **Parameters**:
+  - `arrays` (Uint8Array[]): An array of `Uint8Array` instances to combine.
+- **Returns**: `Uint8Array` - A single `Uint8Array` containing the concatenated data.
+
+##### `static generatePacket(payload, checksumSize=1, flag=0)`
+
+- **Description**: Generates a `BytePacket` from a payload, checksum size, and flag.
+- **Parameters**:
+  - `payload` (Uint8Array): The data to be included in the packet.
+  - `checksumSize` (number, optional): The size of the checksum in bytes. Default is `1` byte.
+  - `flag` (number, optional): The flag to include in the header. Default is `0`.
+- **Returns**: `BytePacket` - The generated `BytePacket`.
+
+##### `static generateRandomPacket(payloadSize, checksumSize, flag)`
+
+- **Description**: Generates a random `BytePacket` with a specified payload size, checksum size, and header flag.
+- **Parameters**:
+  - `payloadSize` (number): The size of the payload to generate.
+  - `checksumSize` (number): The size of the checksum to generate.
+  - `flag` (number): The flag value to include in the header.
+- **Returns**: `BytePacket` - The generated `BytePacket`.
+
+##### `static decodeBase58(base58)`
+
+- **Description**: Decodes a Base58-encoded string into a `BytePacket`.
+- **Parameters**:
+  - `base58` (string): The Base58-encoded string to decode.
+- **Returns**: `BytePacket` - The decoded `BytePacket`.
+- **Throws**: `Error` - If the decoded packet is not valid.
 
 ## Issues and Feedback
 If you have suggestions on how to make this module more useful or if you encounter any issues, please let me know by opening a new issue here [Issues](https://github.com/adam-ballinger/byte-packet/issues). I’m eager for feedback and to collaborate on making byte-packet more useful.
@@ -207,4 +359,7 @@ I believe in the importance of writing code with people in mind—code should be
    - **Suggested Improvement:** Introduce optional error correction methods such as Reed-Soloman.
 
 #### **10. QR Code Generation**
-   - **Suggested Improvement:** Add methods to generate QR codes
+   - **Suggested Improvement:** Add methods to generate QR codes.
+
+#### **11. Lint**
+ - **Suggested Improvement:** Implement Lint.
