@@ -122,10 +122,6 @@ try {
 }
 ```
 
-# BytePacket API Guide
-
-The `BytePacket` class is a lightweight utility module designed for handling and transmitting small pieces of binary data in a secure and efficient manner. The class encapsulates data into a compact format, ensuring the integrity of the data through checksum validation. This guide will provide an overview of the properties and methods available in the `BytePacket` class.
-
 ## API: `class BytePacket`
 
 #### Constructor
