@@ -1,6 +1,6 @@
 {
   "name": "byte-packet",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A BytePacket is a data structure designed to encapsulate and manage binary data (bytes) in a compact and secure format. It is used in situations where you need to handle and transmit small pieces of data, ensuring that the integrity of the data is maintained through checksum validation. byte-packet is a lightweight utility module designed for generating, manipulating, and validating BytePacket objects in Node.js or the browser. Emphasis on performance, minimalism, and ease of integration.",
   "main": "index.js",
   "scripts": {
