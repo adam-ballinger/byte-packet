@@ -1,19 +1,17 @@
 # byte-packet
 
 ![npm](https://img.shields.io/npm/v/byte-packet)
-![license](https://github.com/adam-ballinger/byte-packet/blob/main/LICENSE)
-![downloads](https://img.shields.io/npm/dw/byte-packet)
 
 ## Overview
 
-`byte-packet` is a lightweight utility module designed for generating, manipulating, and validating packets of data with cryptographic security in Node.js or the browser. It integrates random payload generation, checksum calculation, checksum validation, and more. Emphasis on performance, minimalism, and ease of integration.
+A `BytePacket` is a data structure designed to encapsulate and manage binary data (bytes) in a compact and secure format. It is used in situations where you need to handle and transmit small pieces of data, ensuring that the integrity of the data is maintained through checksum validation. byte-packet is a lightweight utility module designed for generating, manipulating, and validating BytePacket objects in Node.js or the browser. Emphasis on performance, minimalism, and ease of integration.
 
 ## Features
 
 - **Cryptographically Secure Random Payloads:** Generate secure random data with randomness that meets cryptographic standards.
 - **Checksum Calculation and Validation:** Create data packets with easy-to-use checksum utilities.
 - **Flexible Byte Packet Management:** Split, combine, and manage byte arrays packets with custom metadata flags, payload sizes, and checksum sizes.
-- **Encoding/Decoding:** Encode and decode data using Base58 and others.
+- **Encoding/Decoding:** Encode and decode data using Base58.
 
 ## Installation
 
