@@ -47,7 +47,7 @@ console.log(packet);
  */
 ```
 
-#### Generating a Random Payload
+#### Generating a Random Packet
 
 ```javascript
 const BytePacket = require('byte-packet');
@@ -105,7 +105,7 @@ const encoded = packet.encodeBase58();
 console.log(encoded); // Base58 string representation of the packet
 ```
 
-#### Decoding with Base58
+#### Decoding a BytePacket from Base58
 
 ```javascript
 const BytePacket = require('byte-packet');
@@ -293,7 +293,17 @@ git checkout -b my-new-feature
 **Run Tests:** If you add new features or fix bugs, please run the tests to ensure the code remains stable. Write new tests for new features.
 ```bash
 npm install --save-dev jest
-npm jest
+npm run test
+```
+
+**Lint your changes:** Lint your changes with the eslint.config.js file for consistency accross the library.
+```bash
+npm install --save-dev eslint
+npm run lint
+
+#Or if you want to eslint to fix:
+
+npm run lint:fix
 ```
 
 **Commit and Push:** Commit your changes and push them to your forked repository.
@@ -314,7 +324,7 @@ Adam Ballinger - [GitHub](https://github.com/adam-ballinger)
 
 I'm excited about Node.js and npm. My focus is on writing code that works seamlessly in both Node.js and the browser, with a strong emphasis on creating small, lightweight packages. My goal is to ensure that everything I write is easy to understand, even for beginners, quick to implement, and adheres to best practices and conventions.
 
-I believe in the importance of writing code with people in mind—code should be as human-friendly as possible. I am an amateur with much to learn, I am dedicated to improving my skills and would appreciate any feedback or guidance from the community.
+I believe in the importance of writing code as human-friendly as possible. I am an amateur with much to learn, I am dedicated to improving my skills and would appreciate any feedback or guidance from the community.
 
 ## To-Do
 
@@ -356,6 +366,3 @@ I believe in the importance of writing code with people in mind—code should be
 
 #### **10. QR Code Generation**
    - **Suggested Improvement:** Add methods to generate QR codes.
-
-#### **11. Lint**
- - **Suggested Improvement:** Implement Lint.
