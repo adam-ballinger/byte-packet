@@ -1,6 +1,6 @@
 ---
 name: "Feedback \U0001F680"
-about: 'Consider answering these questions so I can improve this package '
+about: 'Give invaluable feedback in less than 60 seconds.'
 title: Feedback
 labels: enhancement
 assignees: adam-ballinger
