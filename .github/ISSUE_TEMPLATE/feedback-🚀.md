@@ -2,7 +2,6 @@
 name: "Feedback \U0001F680"
 about: 'Give invaluable feedback in less than 60 seconds.'
 title: Feedback
-labels: enhancement
 assignees: adam-ballinger
 
 ---
