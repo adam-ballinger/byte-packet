@@ -178,7 +178,7 @@ try {
 
 ##### `isValid`
 
-- **Description**: Checks whether the BytePacket is valid by verifying the payload against its checksum.
+- **Description**: Checks whether the BytePacket is valid by verifying the checksum against its payload.
 - **Returns**: `boolean` - `True` if the packet is valid; otherwise, `False`.
 
 ##### `encodeBase58`
