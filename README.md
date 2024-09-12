@@ -1,6 +1,11 @@
 # byte-packet
 
-![npm](https://img.shields.io/npm/v/byte-packet)
+# Your Project Name
+
+![npm version](https://img.shields.io/npm/v/byte-packet.svg)
+![npm downloads](https://img.shields.io/npm/dt/byte-packet.svg)
+![Bundle Size](https://img.shields.io/bundlephobia/min/byte-packet.svg)
+
 
 ## Overview
 
@@ -21,6 +26,13 @@ The name byte-packet comes from this library's use of byte arrays (`Uint8Array`)
 ```bash
 npm install byte-packet
 ```
+
+## Help Improve – Your Feedback Matters! 🚀
+I'm committed to making this npm package the best it can be, and need your input to do it! If this package was useful, met your expectations, or even if it fell short in some way, I'd love to hear from you. Your feedback will help me understand what's working and what features are in demand.
+
+👉 [Click here](https://tinyurl.com/38st5jrt) or scan the QR code to give feedback in less than 60 seconds – your insights will directly influence future updates and features. Thank you for your insights! 🙌
+
+![Feedback](https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=tinyurl.com/38st5jrt&margin=10)
 
 ## Usage
 
@@ -270,9 +282,6 @@ try {
 - **Returns**: `BytePacket` - The decoded `BytePacket`.
 - **Throws**: `Error` - If the decoded packet is not valid.
 
-## Issues and Feedback
-If you have suggestions on how to make this module more useful or if you encounter any issues, please let me know by opening a new issue here [Issues](https://github.com/adam-ballinger/byte-packet/issues). I’m eager for feedback and to collaborate on making byte-packet more useful.
-
 ## Contributing
 I’d love to welcome contributions to the byte-packet module. Whether it’s bug fixes, new features, or improvements to the existing codebase, feedback and input is highly valued.
 
@@ -301,7 +310,7 @@ npm run test
 npm install --save-dev eslint
 npm run lint
 
-#Or if you want to eslint to fix:
+#Or if you want eslint to fix:
 
 npm run lint:fix
 ```
