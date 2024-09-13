@@ -1,7 +1,5 @@
 # byte-packet
 
-# Your Project Name
-
 ![npm version](https://img.shields.io/npm/v/byte-packet.svg)
 ![npm downloads](https://img.shields.io/npm/dt/byte-packet.svg)
 ![Bundle Size](https://img.shields.io/bundlephobia/min/byte-packet.svg)
